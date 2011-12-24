@@ -1,0 +1,4 @@
+BEGIN { FS = ":"}
+{
+	print $1 ": " 2.546613/$2 " user speedup"
+}

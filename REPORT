@@ -1,0 +1,45 @@
+1.
+0 threads:  2.589471s wall;  2.546613s user;  0.037994s sys;
+1 threads:  2.925376s wall;  2.860565s user;  0.018997s sys;
+2 threads:  1.616706s wall;  3.016541s user;  0.042994s sys;
+3 threads:  1.145080s wall;  2.984546s user;  0.108983s sys;
+4 threads:  0.913675s wall;  3.097530s user;  0.118982s sys;
+5 threads:  1.025768s wall;  3.024540s user;  0.140978s sys;
+6 threads:  0.932146s wall;  3.000544s user;  0.102985s sys;
+7 threads:  1.013026s wall;  3.085531s user;  0.304953s sys;
+8 threads:  0.879498s wall;  2.938553s user;  0.059991s sys;
+
+2.
+Chunk Size of 16384:  1.131259s wall;  3.060535s user;  0.123982s sys;
+Chunk Size of  8192:  0.913675s wall;  3.097530s user;  0.118982s sys;
+Chunk Size of  4096:  0.982296s wall;  3.083531s user;  0.111983s sys;
+
+3.
+1 threads:  0.8851754 speedup
+2 threads:  1.6016956 speedup
+3 threads:  2.2613887 speedup
+4 threads:  2.8341270 speedup
+5 threads:  2.5244217 speedup
+6 threads:  2.7779672 speedup
+7 threads:  2.5561742 speedup
+8 threads:  2.9442602 speedup
+
+4.
+0 threads: 1 user speedup
+1 threads: 0.890248 user speedup
+2 threads: 0.844216 user speedup
+3 threads: 0.853266 user speedup
+4 threads: 0.822143 user speedup
+5 threads: 0.841984 user speedup
+6 threads: 0.848717 user speedup
+7 threads: 0.82534 user speedup
+8 threads: 0.866621 user speedup
+
+5.
+Adding threads seems to increase wall clock speedup up to a point.  Though the best time was acheived with 8 threads,
+I believe that that result was anomlous; I found that generally, the algorithm performs best with 4 threads.  The speedup
+likely tails off becuase the schedueler does not assign many more than 4 threads to "work" at the same time.  Also, because
+we use a mutex to protect the queue threads may get held up waiting to gain access to the queue if there are too many.  User
+time seems to hold relatively constant as the number of threads are increased.  It is always slightly higher than the
+usertime of the non-threaded version, which is obviously because of the overheaded involved in managing the work that
+is assigned to the different threads.
